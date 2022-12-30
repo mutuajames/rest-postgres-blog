@@ -1,0 +1,4 @@
+postgres:
+  host: localhost
+  user: james
+  password: New$Things1
