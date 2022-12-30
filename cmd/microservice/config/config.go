@@ -2,6 +2,7 @@ package config
 
 import (
 	"bytes"
+	_ "embed"
 	"github.com/spf13/viper"
 	"strings"
 )
@@ -16,7 +17,7 @@ type Config struct {
 	Postgres *Postgres
 }
 
-//go: embed config.yml
+//go:embed config.yml
 var defaultConfiguration []byte
 
 func Read() (*Config, error) {

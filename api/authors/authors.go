@@ -19,9 +19,19 @@ func NewService(queries *database.Queries) *Service {
 	}
 }
 
+// RegisterHandlers - Defining handlers
+func (s *Service) RegisterHandlers(router *gin.Engine) {
+	router.POST("/authors", s.Create)
+	router.GET("/author/:id", s.Get)
+	router.PUT("/author/:id", s.FullUpdate)
+	router.PATCH("/author/:id", s.PartialUpdate)
+	router.DELETE("/author/:id", s.Delete)
+	router.GET("/authors", s.List)
+}
+
 type apiAuthor struct {
 	ID   int64
-	Name string `json:"name,omitempty" binding:"required, max=32"`
+	Name string `json:"name,omitempty" binding:"required"`
 	Bio  string `json:"bio,omitempty" binding:"required"`
 }
 
@@ -223,14 +233,4 @@ func (s *Service) PartialUpdate(c *gin.Context) {
 	// Build response
 	response := fromDB(author)
 	c.IndentedJSON(http.StatusOK, response)
-}
-
-// RegisterHandlers - Defining handlers
-func (s *Service) RegisterHandlers(router *gin.Engine) {
-	router.POST("/authors", s.Create)
-	router.GET("/authors/:id", s.Get)
-	router.PUT("/authors/:id", s.FullUpdate)
-	router.PATCH("/authors/:id", s.PartialUpdate)
-	router.DELETE("/authors/:id", s.Delete)
-	router.GET("/authors", s.List)
 }

@@ -9,6 +9,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	_ "github.com/lib/pq"
 )
 
 type Postgres struct {
@@ -16,7 +17,7 @@ type Postgres struct {
 }
 
 func NewPostgres(host, user, password string) (*Postgres, error) {
-	db, err := sql.Open("postgres", fmt.Sprintf("Host = %s User = %s Password = %s SSlmode = disable", host, user, password))
+	db, err := sql.Open("postgres", fmt.Sprintf("host = %s user = %s password = %s", host, user, password))
 	if err != nil {
 		return nil, err
 	}
